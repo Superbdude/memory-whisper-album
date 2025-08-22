@@ -1,42 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Digital Memory Album Design System - Warm, Nostalgic, Modern */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Warm Memory Palette */
+    --background: 31 20% 97%;  /* Creamy white */
+    --foreground: 225 15% 25%;  /* Soft charcoal */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;  /* Pure white for cards */
+    --card-foreground: 225 15% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 225 15% 25%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Memory Blue - main brand color */
+    --primary: 215 80% 65%;  /* Soft sky blue */
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 215 80% 85%;
+    --primary-dark: 215 80% 45%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Warm secondary */
+    --secondary: 45 40% 92%;  /* Warm cream */
+    --secondary-foreground: 225 15% 35%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 45 25% 95%;  /* Very light warm gray */
+    --muted-foreground: 225 10% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 320 60% 88%;  /* Soft pink accent */
+    --accent-foreground: 225 15% 25%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 45 20% 88%;
+    --input: 45 20% 92%;
+    --ring: 215 80% 65%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;  /* More rounded for warmth */
+
+    /* Memory-specific colors */
+    --memory-warm: 25 85% 88%;  /* Warm peach */
+    --memory-cool: 195 75% 88%;  /* Cool blue */
+    --memory-love: 340 75% 88%;  /* Soft rose */
+    --memory-nature: 125 45% 85%;  /* Gentle green */
+    
+    /* Glassmorphism */
+    --glass-bg: 0 0% 100% / 0.25;
+    --glass-border: 0 0% 100% / 0.18;
+    --glass-shadow: 0 8px 32px hsl(225 15% 25% / 0.1);
+    
+    /* Gradients */
+    --gradient-memory: linear-gradient(135deg, hsl(var(--memory-warm)), hsl(var(--memory-cool)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary-light)), hsl(var(--accent)));
+    --gradient-timeline: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(225 15% 25% / 0.08);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.15);
+    --shadow-memory: 0 8px 30px hsl(225 15% 25% / 0.12);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +129,95 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+  }
+}
+
+@layer components {
+  /* Glass morphism effects */
+  .glass {
+    @apply backdrop-blur-md bg-white/25 border border-white/18;
+    box-shadow: var(--glass-shadow);
+  }
+  
+  .glass-strong {
+    @apply backdrop-blur-lg bg-white/40 border border-white/25;
+    box-shadow: var(--glass-shadow);
+  }
+  
+  /* Memory card effects */
+  .memory-card {
+    @apply rounded-2xl overflow-hidden;
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%);
+    box-shadow: var(--shadow-memory);
+    transition: var(--transition-smooth);
+  }
+  
+  .memory-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  /* Gradient backgrounds */
+  .gradient-memory {
+    background: var(--gradient-memory);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-timeline {
+    background: var(--gradient-timeline);
+  }
+  
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  
+  .scale-in {
+    animation: scaleIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary-dark));
   }
 }
