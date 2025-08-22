@@ -136,12 +136,14 @@
 @layer components {
   /* Glass morphism effects */
   .glass {
-    @apply backdrop-blur-md bg-white/25 border border-white/18;
+    @apply backdrop-blur-md bg-white/25 border;
+    border-color: hsl(var(--glass-border));
     box-shadow: var(--glass-shadow);
   }
   
   .glass-strong {
-    @apply backdrop-blur-lg bg-white/40 border border-white/25;
+    @apply backdrop-blur-lg bg-white/40 border;
+    border-color: hsl(var(--glass-border));
     box-shadow: var(--glass-shadow);
   }
   
