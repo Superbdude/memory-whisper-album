@@ -1,4 +1,5 @@
 import { Calendar, MapPin, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import memory1 from "@/assets/memory-1.jpg";
 import memory2 from "@/assets/memory-2.jpg";
@@ -95,7 +96,7 @@ const Timeline = () => {
                         <div className="absolute -left-8 top-6 w-3 h-3 rounded-full bg-primary border-2 border-background" />
                         
                         {/* Memory Card */}
-                        <div className="memory-card group cursor-pointer">
+                        <Link to={`/product-details/${memory.id}`} className="memory-card group cursor-pointer block">
                           <div className="flex flex-col sm:flex-row">
                             <div className="sm:w-48 h-48 sm:h-32 overflow-hidden rounded-l-2xl sm:rounded-r-none rounded-r-2xl">
                               <img
@@ -131,7 +132,7 @@ const Timeline = () => {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </Link>
                       </div>
                     ))}
                   </div>

@@ -11,6 +11,11 @@ const Navigation = () => {
     { to: "/profile", icon: User, label: "Profile" },
   ];
 
+  const secondaryNavItems = [
+    { to: "/about", label: "About" },
+    { to: "/contact", label: "Contact" },
+  ];
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,6 +45,23 @@ const Navigation = () => {
               >
                 <item.icon className="w-4 h-4" />
                 <span className="text-sm font-medium">{item.label}</span>
+              </NavLink>
+            ))}
+            
+            {/* Secondary Navigation */}
+            {secondaryNavItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-lg text-sm transition-all duration-300 ${
+                    isActive
+                      ? "text-primary font-medium"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`
+                }
+              >
+                {item.label}
               </NavLink>
             ))}
           </div>

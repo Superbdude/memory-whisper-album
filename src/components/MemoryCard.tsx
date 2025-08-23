@@ -1,5 +1,6 @@
 import { Heart, MapPin, Calendar, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface MemoryCardProps {
   id: string;
@@ -11,9 +12,9 @@ interface MemoryCardProps {
   className?: string;
 }
 
-const MemoryCard = ({ image, title, date, location, emotions, className = "" }: MemoryCardProps) => {
+const MemoryCard = ({ id, image, title, date, location, emotions, className = "" }: MemoryCardProps) => {
   return (
-    <div className={`memory-card group cursor-pointer ${className}`}>
+    <Link to={`/product-details/${id}`} className={`memory-card group cursor-pointer block ${className}`}>
       <div className="relative overflow-hidden">
         <img 
           src={image} 
@@ -67,7 +68,7 @@ const MemoryCard = ({ image, title, date, location, emotions, className = "" }: 
           </Button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
