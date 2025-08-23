@@ -1,8 +1,9 @@
-import { Camera, Plus, Grid3X3, LayoutList } from "lucide-react";
+import { Camera, Plus, Grid3X3, LayoutList, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import MemoryCard from "@/components/MemoryCard";
 import UploadModal from "@/components/UploadModal";
+import SortFilterModal from "@/components/SortFilterModal";
 import memory1 from "@/assets/memory-1.jpg";
 import memory2 from "@/assets/memory-2.jpg";
 import memory3 from "@/assets/memory-3.jpg";
@@ -91,6 +92,12 @@ const Index = () => {
             </div>
             
             <div className="flex items-center space-x-2">
+              <SortFilterModal>
+                <Button variant="outline" size="sm">
+                  <Filter className="w-4 h-4 mr-2" />
+                  Sort & Filter
+                </Button>
+              </SortFilterModal>
               <Button variant="outline" size="sm">
                 <Grid3X3 className="w-4 h-4" />
               </Button>

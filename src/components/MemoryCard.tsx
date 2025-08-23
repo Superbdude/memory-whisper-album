@@ -1,6 +1,7 @@
 import { Heart, MapPin, Calendar, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 interface MemoryCardProps {
   id: string;
@@ -10,9 +11,11 @@ interface MemoryCardProps {
   location?: string;
   emotions?: string[];
   className?: string;
+  isLiked?: boolean;
+  onToggleLike?: () => void;
 }
 
-const MemoryCard = ({ id, image, title, date, location, emotions, className = "" }: MemoryCardProps) => {
+const MemoryCard = ({ id, image, title, date, location, emotions, className = "", isLiked = false, onToggleLike }: MemoryCardProps) => {
   return (
     <Link to={`/product-details/${id}`} className={`memory-card group cursor-pointer block ${className}`}>
       <div className="relative overflow-hidden">
@@ -63,9 +66,27 @@ const MemoryCard = ({ id, image, title, date, location, emotions, className = ""
             )}
           </div>
           
-          <Button size="sm" variant="ghost" className="h-auto p-1 text-muted-foreground hover:text-primary">
-            <Heart className="w-4 h-4" />
-          </Button>
+          {onToggleLike && (
+            <Button 
+              size="sm" 
+              variant="ghost" 
+              className="h-auto p-1 text-muted-foreground hover:text-primary"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onToggleLike();
+              }}
+            >
+              <Heart 
+                className={cn(
+                  "w-4 h-4 transition-all",
+                  isLiked 
+                    ? "text-red-500 fill-red-500" 
+                    : "text-muted-foreground hover:text-red-500"
+                )} 
+              />
+            </Button>
+          )}
         </div>
       </div>
     </Link>

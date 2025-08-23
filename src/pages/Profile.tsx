@@ -3,10 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Navigation from "@/components/Navigation";
 import MemoryCard from "@/components/MemoryCard";
+import EditProfileModal from "@/components/EditProfileModal";
+import SettingsModal from "@/components/SettingsModal";
+import { useToast } from "@/components/ui/use-toast";
 import memory1 from "@/assets/memory-1.jpg";
 import memory2 from "@/assets/memory-2.jpg";
 
 const Profile = () => {
+  const { toast } = useToast();
+  
   const stats = [
     { label: "Total Memories", value: "127", icon: Camera },
     { label: "Albums Created", value: "8", icon: Heart },
@@ -32,6 +37,13 @@ const Profile = () => {
       emotions: ["🌅", "💭"],
     },
   ];
+
+  const handleUpgradeStorage = () => {
+    toast({
+      title: "Upgrade Storage",
+      description: "Storage upgrade options are coming soon!",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -66,14 +78,18 @@ const Profile = () => {
                     </div>
                     
                     <div className="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-                      <Button variant="outline" size="sm">
-                        <Edit3 className="w-4 h-4 mr-2" />
-                        Edit Profile
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Settings className="w-4 h-4 mr-2" />
-                        Settings
-                      </Button>
+                      <EditProfileModal>
+                        <Button variant="outline" size="sm">
+                          <Edit3 className="w-4 h-4 mr-2" />
+                          Edit Profile
+                        </Button>
+                      </EditProfileModal>
+                      <SettingsModal>
+                        <Button variant="outline" size="sm">
+                          <Settings className="w-4 h-4 mr-2" />
+                          Settings
+                        </Button>
+                      </SettingsModal>
                     </div>
                   </div>
                   
@@ -213,7 +229,11 @@ const Profile = () => {
                     </div>
                   </div>
                   
-                  <Button variant="outline" className="w-full mt-4">
+                  <Button 
+                    variant="outline" 
+                    className="w-full mt-4"
+                    onClick={handleUpgradeStorage}
+                  >
                     Upgrade Storage
                   </Button>
                 </div>

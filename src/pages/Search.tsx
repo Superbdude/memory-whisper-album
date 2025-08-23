@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import MemoryCard from "@/components/MemoryCard";
+import { useToast } from "@/components/ui/use-toast";
 import memory1 from "@/assets/memory-1.jpg";
 import memory2 from "@/assets/memory-2.jpg";
 import memory3 from "@/assets/memory-3.jpg";
@@ -13,6 +14,8 @@ const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [likedMemories, setLikedMemories] = useState<string[]>([]);
+  const { toast } = useToast();
 
   const allMemories = [
     {
@@ -76,6 +79,20 @@ const Search = () => {
   const clearAllFilters = () => {
     setActiveFilters([]);
     setSearchQuery("");
+  };
+
+  const toggleLike = (memoryId: string) => {
+    setLikedMemories(prev => 
+      prev.includes(memoryId) 
+        ? prev.filter(id => id !== memoryId)
+        : [...prev, memoryId]
+    );
+    
+    const isLiked = likedMemories.includes(memoryId);
+    toast({
+      title: isLiked ? "Removed from Favorites" : "Added to Favorites",
+      description: isLiked ? "Memory removed from your favorites" : "Memory added to your favorites",
+    });
   };
 
   return (
@@ -253,7 +270,11 @@ const Search = () => {
                   className="fade-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <MemoryCard {...memory} />
+                  <MemoryCard 
+                    {...memory}
+                    isLiked={likedMemories.includes(memory.id)}
+                    onToggleLike={() => toggleLike(memory.id)}
+                  />
                 </div>
               ))}
             </div>

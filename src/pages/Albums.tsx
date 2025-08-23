@@ -2,8 +2,12 @@ import { Folder, Plus, Search, Grid3X3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
+import CreateAlbumModal from "@/components/CreateAlbumModal";
+import { useState } from "react";
 
 const Albums = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  
   const albums = [
     {
       id: "1",
@@ -35,6 +39,10 @@ const Albums = () => {
     },
   ];
 
+  const filteredAlbums = albums.filter(album =>
+    album.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -48,10 +56,12 @@ const Albums = () => {
               <p className="text-muted-foreground">Organize your memories into collections</p>
             </div>
             
-            <Button className="bg-primary hover:bg-primary-dark mt-4 sm:mt-0">
-              <Plus className="w-4 h-4 mr-2" />
-              Create Album
-            </Button>
+            <CreateAlbumModal>
+              <Button className="bg-primary hover:bg-primary-dark mt-4 sm:mt-0">
+                <Plus className="w-4 h-4 mr-2" />
+                Create Album
+              </Button>
+            </CreateAlbumModal>
           </div>
 
           {/* Search */}
@@ -60,12 +70,14 @@ const Albums = () => {
             <Input
               placeholder="Search albums..."
               className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
           {/* Albums Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {albums.map((album, index) => (
+            {filteredAlbums.map((album, index) => (
               <div
                 key={album.id}
                 className="memory-card fade-in group cursor-pointer"
@@ -96,19 +108,21 @@ const Albums = () => {
             ))}
             
             {/* Create New Album Card */}
-            <div className="memory-card fade-in group cursor-pointer border-2 border-dashed border-primary/30 hover:border-primary/50">
-              <div className="w-full h-48 flex items-center justify-center rounded-t-2xl bg-primary/5">
-                <div className="text-center text-primary">
-                  <Plus className="w-12 h-12 mx-auto mb-2" />
-                  <p className="text-sm font-medium">Create Album</p>
+            <CreateAlbumModal>
+              <div className="memory-card fade-in group cursor-pointer border-2 border-dashed border-primary/30 hover:border-primary/50">
+                <div className="w-full h-48 flex items-center justify-center rounded-t-2xl bg-primary/5">
+                  <div className="text-center text-primary">
+                    <Plus className="w-12 h-12 mx-auto mb-2" />
+                    <p className="text-sm font-medium">Create Album</p>
+                  </div>
+                </div>
+                
+                <div className="p-4">
+                  <h3 className="font-semibold text-foreground mb-1">New Album</h3>
+                  <p className="text-sm text-muted-foreground">Start a new collection</p>
                 </div>
               </div>
-              
-              <div className="p-4">
-                <h3 className="font-semibold text-foreground mb-1">New Album</h3>
-                <p className="text-sm text-muted-foreground">Start a new collection</p>
-              </div>
-            </div>
+            </CreateAlbumModal>
           </div>
         </div>
       </div>

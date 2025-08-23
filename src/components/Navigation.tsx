@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { Home, Folder, Clock, Search, User, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import UploadModal from "./UploadModal";
 
 const Navigation = () => {
   const navItems = [
@@ -67,14 +68,16 @@ const Navigation = () => {
           </div>
 
           {/* Upload Button */}
-          <Button 
-            variant="default" 
-            size="sm" 
-            className="hidden md:flex bg-primary hover:bg-primary-dark text-primary-foreground shadow-lg"
-          >
-            <Camera className="w-4 h-4 mr-2" />
-            Upload
-          </Button>
+          <UploadModal>
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="hidden md:flex bg-primary hover:bg-primary-dark text-primary-foreground shadow-lg"
+            >
+              <Camera className="w-4 h-4 mr-2" />
+              Upload
+            </Button>
+          </UploadModal>
         </div>
       </div>
 

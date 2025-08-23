@@ -4,8 +4,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Navigation from "@/components/Navigation";
+import FAQModal from "@/components/FAQModal";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+  const { toast } = useToast();
+  
   const contactMethods = [
     {
       icon: Mail,
@@ -36,6 +48,39 @@ const Contact = () => {
       action: "#"
     }
   ];
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.id]: e.target.value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.firstName || !formData.email || !formData.message) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Message Sent!",
+      description: "Thank you for your message. We'll get back to you soon.",
+    });
+
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      subject: "",
+      message: ""
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -70,26 +115,47 @@ const Contact = () => {
                 <div className="p-8">
                   <h2 className="text-2xl font-semibold text-foreground mb-6">Send us a message</h2>
                   
-                  <form className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="John" />
+                        <Input 
+                          id="firstName" 
+                          placeholder="John" 
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                        />
                       </div>
                       <div>
                         <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Doe" />
+                        <Input 
+                          id="lastName" 
+                          placeholder="Doe"
+                          value={formData.lastName}
+                          onChange={handleInputChange}
+                        />
                       </div>
                     </div>
                     
                     <div>
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="john.doe@example.com" />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder="john.doe@example.com"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                      />
                     </div>
                     
                     <div>
                       <Label htmlFor="subject">Subject</Label>
-                      <Input id="subject" placeholder="How can we help you?" />
+                      <Input 
+                        id="subject" 
+                        placeholder="How can we help you?"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                      />
                     </div>
                     
                     <div>
@@ -98,6 +164,8 @@ const Contact = () => {
                         id="message"
                         placeholder="Tell us more about your question or feedback..."
                         rows={6}
+                        value={formData.message}
+                        onChange={handleInputChange}
                       />
                     </div>
                     
@@ -172,9 +240,11 @@ const Contact = () => {
                     </div>
                   </div>
                   
-                  <Button variant="outline" className="w-full mt-6">
-                    View Full FAQ
-                  </Button>
+                  <FAQModal>
+                    <Button variant="outline" className="w-full mt-6">
+                      View Full FAQ
+                    </Button>
+                  </FAQModal>
                 </div>
               </div>
             </div>
